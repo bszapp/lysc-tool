@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -14,7 +18,7 @@ jobs:
           cache: 'npm'
       - run: npm install
       - run: npm run build
-      - uses: JamesIves/github-pages-deploy-action@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          folder: dist
-          branch: gh-pages
+          path: dist
+      - uses: actions/deploy-pages@v4
